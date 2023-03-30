@@ -1,0 +1,22 @@
+.Lists{}
+
+.right-pane-item {
+    text-align: left;
+    height: 30px;
+    padding-left: 10px;
+    padding-top: 10px;
+    border-bottom: 1px solid #dadada;
+    cursor: pointer;
+}
+
+.right-pane-item:hover {
+    background-color: #d6d6d660;
+}
+
+.right-pane-item-icon {
+    width: 30px;
+    height: 30px;
+    float: left;
+    margin-top: 4px;
+    color: #1677ff;
+}
