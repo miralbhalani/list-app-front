@@ -1,3 +1,16 @@
+
+# Setup
+1. git clone https://github.com/miralbhalani/list-app-front.git
+2. cd list-app-front
+3. npm install
+
+# Run
+5. npm start
+
+# Test
+6. npm test
+
+---------------------------------------------------------------------------
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
