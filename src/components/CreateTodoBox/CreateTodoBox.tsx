@@ -15,8 +15,8 @@ interface CreateTodoBoxProps {
 const CreateTodoBox: FC<CreateTodoBoxProps> = (props) => {
 
   const onFinish = async (values: any) => {
-    console.log('Success:', values);
 
+    // prepare listItem
     let listItem: ListItem = listStore.getListItemPrototype()
 
     listItem = {
@@ -24,13 +24,21 @@ const CreateTodoBox: FC<CreateTodoBoxProps> = (props) => {
       ...values
     }
 
+    // upsert prepared list item to API
     let result = props.list._id && await upsertListItem(props.list._id, listItem, listItem.id)
+
     if(result) {
+
+      // modify if have updated ID of list item
       listItem = {
         ...listItem,
         id: listItem.id || result as string
       }
+
+      // upsert the updated listitem to the list store
       listStore.upsertListItem(props.list, listItem, props.listItemIndex)
+
+      // notify the parent about successfull updation with new item
       props.onSubmitComplete(listItem)
     } else {
       console.log("SOMETHING WRONG HAPPEND PLEASE CHECK THE LOGS");
@@ -38,7 +46,7 @@ const CreateTodoBox: FC<CreateTodoBoxProps> = (props) => {
   };
   
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    // The <Form> tag handles the error by default
   };
 
   return (

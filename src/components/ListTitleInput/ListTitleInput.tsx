@@ -14,11 +14,12 @@ const ListTitleInput: FC<ListTitleInputProps> = (props) => {
   const listTitleInputStore = new ListTitleInputComponentStore(props.title);
   
   const onFinish = (values: any) => {
+    // notify the update to parent
     props.onSubmitComplete(values.title)
   };
   
   const onFinishFailed = (errorInfo: any) => {
-    console.log('Failed:', errorInfo);
+    // The <Form> tag handles the error
   };
 
   return (

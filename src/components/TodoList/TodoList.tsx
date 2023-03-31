@@ -25,6 +25,7 @@ const TodoList: FC<TodoListProps> = observer((props) => {
   }
 
   const todoClickHandler = (listItemEach: ListItem | null, listItemEachIndex?: number) => {
+    // modify the store for selectd list item to show in popup
     props.todoListComponentStore.setSelectedListIndex(listItemEachIndex)
     props.todoListComponentStore.setSelectedListItem(listItemEach)
     props.todoListComponentStore.openAddTodoModal()
@@ -67,14 +68,3 @@ const TodoList: FC<TodoListProps> = observer((props) => {
 });
 
 export default TodoList;
-
-
-// Test that the "Add/Edit Todo" modal is not open by default.
-// Test that clicking the cancel button in the "Add/Edit Todo" modal closes the modal.
-// Test that clicking the submit button in the "Add/Edit Todo" modal closes the modal and calls the onSubmitComplete callback.
-// Test that clicking the "Add a todo" button sets the selected list item to null and the selected list item index to undefined.
-// Test that clicking a list item sets the selected list item to the clicked item and the selected list item index to the index of the clicked item.
-// Test that clicking a list item when the "Add/Edit Todo" modal is already open sets the selected list item to the clicked item and the selected list item index to the index of the clicked item, but does not close the modal.
-// Test that changing the selected list in the list store updates the component to show the new list's items.
-// Test that changing the selected list in the list store when the "Add/Edit Todo" modal is open updates the CreateTodoBox to show the new list's information.
-// Test that changing the selected list in the list store when the "Add/Edit Todo" modal is open and there is a selected list item updates the CreateTodoBox to show the correct list item information.
