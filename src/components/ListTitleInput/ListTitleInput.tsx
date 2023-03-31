@@ -38,7 +38,7 @@ const ListTitleInput: FC<ListTitleInputProps> = (props) => {
           name="title"
           rules={[{ required: true, message: 'Please add title' }]}
         >
-          <Input data-testid="form-intpu-title" defaultValue={props.title} />
+          <Input data-testid="form-intput-title" defaultValue={props.title} />
         </Form.Item>
   
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>

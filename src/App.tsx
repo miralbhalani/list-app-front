@@ -8,7 +8,7 @@ function App() {
     <div className="App">
       
       
-      <Dashboard></Dashboard>
+      <Dashboard data-testid="dashboard"></Dashboard>
     </div>
   );
 }

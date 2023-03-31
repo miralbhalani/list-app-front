@@ -23,6 +23,10 @@ class ListStore {
             selectedList: observable,
             something: observable,
             selectList: action,
+            attachNewLists: action,
+            changeListTitle: action,
+            addNewList: action,
+            upsertListItem: action,
             // changeListTitle: action
         });
     }

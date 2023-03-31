@@ -59,7 +59,7 @@ const CreateTodoBox: FC<CreateTodoBoxProps> = (props) => {
           initialValue={props.listItem?.title}
           rules={[{ required: true, message: 'Please add title' }]}
         >
-          <Input />
+          <Input data-testid="create-todo-title"/>
         </Form.Item>
   
         <Form.Item
@@ -67,11 +67,11 @@ const CreateTodoBox: FC<CreateTodoBoxProps> = (props) => {
           name="details"
           initialValue={props.listItem?.details}
         >
-          <Input.TextArea />
+          <Input.TextArea data-testid="create-todo-details"/>
         </Form.Item>
   
         <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
-          <Button type="primary" htmlType="submit">
+          <Button data-testid="create-todo-submit" type="primary" htmlType="submit">
             Submit
           </Button>
         </Form.Item>

@@ -66,7 +66,7 @@ const Lists: FC<ListsProps> = observer(() => {
       {
         listStore.lists.map((listEach) => {
           return <>
-            <div data-testid="list-item" className='left-pane-item' onClick={() => {listSelectionHandler(listEach)}}>
+            <div key={listEach._id} data-testid="list-item" className='left-pane-item' onClick={() => {listSelectionHandler(listEach)}}>
               <AntDesignOutlined className='left-pane-item-icon' />
               {listEach.title}
 
@@ -86,12 +86,14 @@ const Lists: FC<ListsProps> = observer(() => {
       }
       <div className='left-pane-item'>
         <PlusOutlined className='left-pane-item-icon' />
-        <Popover content={<>
-          <ListTitleInput onSubmitComplete={(title) => {
-            addListHandler(title)
-          }}></ListTitleInput>
+        <Popover  content={<>
+          <div data-testid="list-title-input-add">
+            <ListTitleInput onSubmitComplete={(title) => {
+              addListHandler(title)
+            }}></ListTitleInput>
+          </div>
         </>} title="Change list title" trigger="click">
-            New List
+            <div data-testid="new-list-add">New List</div>
         </Popover>
         
       </div>

@@ -12,6 +12,7 @@ import listStore from "../../stores/ListStore";
 import { List, ListItem } from '../../types';
 import waitForExpect from 'wait-for-expect';
 import { act } from 'react-dom/test-utils';
+import { editListTitle } from '../../services';
 const mockLists: List[] = [{ _id: "5252", title: "Title 1", items: [{ title: 'Title 2' }, { title: 'Title 3' }, { title: 'Title 4' }] }];
 
 window.matchMedia = window.matchMedia || function() {
@@ -27,12 +28,21 @@ jest.mock("../../services/index", () => ({
   
   getList: async () => {
     return mockLists
-  }
+  },
+  editListTitle: async () => {
+    return true
+  },
+  addList: async () => {
+    return "523666"
+  },
 }))
 
 describe('<Lists />', () => {
-  test('it should mount', () => {
-    render(<Lists />);
+  test('it should mount', async () => {
+
+    await act(async () => {
+      render(<Lists />);
+    });
     
     const lists = screen.getByTestId('Lists');
 
@@ -41,17 +51,17 @@ describe('<Lists />', () => {
 
   describe('render lists', () => {
 
-    beforeEach(() => {
-      render(<Lists />);
+    beforeEach( async () => {
+      await act(async () => {
+        render(<Lists />);
+      });
       const lists = screen.getByTestId('Lists');
       expect(lists).toBeInTheDocument();
     })
 
     test('list reflects in store', async () => {
 
-      await waitForExpect(() => {
-        expect(listStore.lists).toStrictEqual(mockLists)
-      })
+      expect(listStore.lists).toStrictEqual(mockLists)
     });
     
     test('list renders', async () => {
@@ -74,13 +84,13 @@ describe('<Lists />', () => {
   describe('list ad/edit popover renders', () => {
 
     beforeEach(async () => {
-      render(<Lists />);
+      await act(async () => {
+        render(<Lists />);
+      });
       const lists = screen.getByTestId('Lists');
       expect(lists).toBeInTheDocument();
 
-      await waitForExpect(() => {
-        expect(listStore.lists).toStrictEqual(mockLists)
-      })
+      expect(listStore.lists).toStrictEqual(mockLists)
     })
 
     test('renders popover on click of edit', async () => {
@@ -100,41 +110,107 @@ describe('<Lists />', () => {
   describe('add/edit lists', () => {
 
     beforeEach(async () => {
-      render(<Lists />);
+      await act(async () => {
+        render(<Lists />);
+      });
       const lists = screen.getByTestId('Lists');
       expect(lists).toBeInTheDocument();
 
-      await waitForExpect(() => {
-        expect(listStore.lists).toStrictEqual(mockLists)
-      })
+      expect(listStore.lists).toStrictEqual(mockLists)
 
     })
 
-    test('renders popover on click of edit', async () => {
+    test('edits the list', async () => {
 
-      
       let listItemEditDoc = screen.getByTestId('list-item-edit');
 
       fireEvent.click(listItemEditDoc)
 
       let listTitleInput = screen.getByTestId('list-title-input');
       expect(listTitleInput).toBeInTheDocument()
-
       
-      let formIntpuTitle = screen.getByTestId('form-intpu-title');
-      act(() => {
+      let formIntpuTitle = screen.getByTestId('form-intput-title');
+      await act(async () => {
         fireEvent.change(formIntpuTitle, { target: { value: 'newIDM' } })
-      })
-      
+      });
 
       let formSubmitTitle = screen.getByTestId('form-submit-title');
-      fireEvent.click(formSubmitTitle)
-      
+      await act(async () => {
+        fireEvent.click(formSubmitTitle)
+      });
 
       let newTitle = screen.getByText('newIDM');
       expect(newTitle).toBeInTheDocument()
     });
+
+    test('restricts invalid value edit in the list', async () => {
+
+      let listItemEditDoc = screen.getByTestId('list-item-edit');
+
+      fireEvent.click(listItemEditDoc)
+
+      let listTitleInput = screen.getByTestId('list-title-input');
+      expect(listTitleInput).toBeInTheDocument()
+      
+      let formIntpuTitle = screen.getByTestId('form-intput-title');
+      await act(async () => {
+        fireEvent.change(formIntpuTitle, { target: { value: '' } })
+      });
+
+      let formSubmitTitle = screen.getByTestId('form-submit-title');
+      await act(async () => {
+        fireEvent.click(formSubmitTitle)
+      });
+
+      let newTitle = screen.getByText(mockLists[0].title);
+      expect(newTitle).toBeInTheDocument()
+    });
+
+    test('adds in the list', async () => {
+
+      let addListItem = screen.getByTestId('new-list-add');
+
+      fireEvent.click(addListItem)
+
+      let listTitleInput = screen.getByTestId('list-title-input-add');
+      expect(listTitleInput).toBeInTheDocument()
+      
+      let formIntpuTitle = screen.getByTestId('form-intput-title');
+      await act(async () => {
+        fireEvent.change(formIntpuTitle, { target: { value: 'AddedList' } })
+      });
+
+      let formSubmitTitle = screen.getByTestId('form-submit-title');
+      await act(async () => {
+        fireEvent.click(formSubmitTitle)
+      });
+
+      expect(listStore.lists).toHaveLength(2)
+
+      let newTitle = screen.getByText('AddedList');
+      expect(newTitle).toBeInTheDocument()
+    });
+
+    test('restricts invalid value to add in the list', async () => {
+
+      let addListItem = screen.getByTestId('new-list-add');
+
+      fireEvent.click(addListItem)
+
+      let listTitleInput = screen.getByTestId('list-title-input-add');
+      expect(listTitleInput).toBeInTheDocument()
+      
+      let formIntpuTitle = screen.getByTestId('form-intput-title');
+      await act(async () => {
+        fireEvent.change(formIntpuTitle, { target: { value: '' } })
+      });
+
+      let formSubmitTitle = screen.getByTestId('form-submit-title');
+      await act(async () => {
+        fireEvent.click(formSubmitTitle)
+      });
+
+      expect(listStore.lists).toHaveLength(1)
+    });
   }) 
-
-
 });
