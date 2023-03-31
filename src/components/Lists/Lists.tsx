@@ -20,6 +20,7 @@ const Lists: FC<ListsProps> = observer(() => {
 
   const fetchData = async() => {
     let lists = await getList();
+    
     if(lists) {
       listStore.attachNewLists(lists as List[])
     }
@@ -65,16 +66,18 @@ const Lists: FC<ListsProps> = observer(() => {
       {
         listStore.lists.map((listEach) => {
           return <>
-            <div className='left-pane-item' onClick={() => {listSelectionHandler(listEach)}}>
+            <div data-testid="list-item" className='left-pane-item' onClick={() => {listSelectionHandler(listEach)}}>
               <AntDesignOutlined className='left-pane-item-icon' />
               {listEach.title}
 
               <Popover content={<>
-                <ListTitleInput onSubmitComplete={(newTitle) => { 
-                    handleListTitleChangeHandler(listEach, newTitle)
-                  }}></ListTitleInput>
+                <div data-testid="list-title-input">
+                  <ListTitleInput  onSubmitComplete={(newTitle) => { 
+                      handleListTitleChangeHandler(listEach, newTitle)
+                    }}></ListTitleInput>
+                </div>
               </>} title="Change list title" trigger="click">
-                <EditOutlined className='left-pane-option-icon' />
+                <EditOutlined data-testid="list-item-edit" className='left-pane-option-icon' />
               </Popover>
 
             </div>

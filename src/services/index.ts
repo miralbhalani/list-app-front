@@ -14,7 +14,6 @@ export const getToken = async () : Promise<string> => {
 
 export const getList = async () : Promise<List[] | boolean> => {
 
-    console.log("+++++++++++++++++++++++++++++++++++")
     try {
         var response = await axiosWrapper.get("/list")
         return response.data
