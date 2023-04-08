@@ -16,7 +16,7 @@ const Dashboard: FC<DashboardProps> = () => {
         hasToken && <div className='Dashboard'>
         <div className='left-pane'>
           <div className='left-pane-item list-app-title'>
-            MOVIE LIST
+            MOVIE LIST of listuser1 -- LOGOUT
           </div>
           <Lists></Lists>
         </div>
