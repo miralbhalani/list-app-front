@@ -3,19 +3,21 @@ import axios from 'axios';
 import settings from '../settings';
 import axiosWrapper from '../lib/axiosWrapper';
 
-export const getToken = async () : Promise<string> => {
+export const getToken = async ( creds?: any) : Promise<string> => {
 
     var response = await axios.post(`${settings.backendBase}/token`, {
-        "username": "listuser1",
-        "password": "dlojekm!23%123"
+        ...(creds || {
+            "username": "listuser1",
+            "password": "dlojekm!23%123"
+        })
     })
     return response.data.token
 } 
 
-export const getList = async () : Promise<List[] | boolean> => {
+export const getList = async (query?: string) : Promise<List[] | boolean> => {
 
     try {
-        var response = await axiosWrapper.get("/list")
+        var response = await axiosWrapper.get(`/list${query && `?q=${query}` || '' }`)
         return response.data
     } catch (error) {
         console.log("Error log", error)

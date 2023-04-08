@@ -3,7 +3,6 @@ import { List, ListItem } from '../types';
 
 class ListStore {
 
-    //TODO: A DUMMY OBJECT INCASE IF THE TESTER DONT HAVE BACKEND RUNNING
     lists: List[] = [{
         _id: "123",
         title: "ABC",

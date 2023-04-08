@@ -5,7 +5,7 @@
 }
 
 .left-pane {
-    width: 250px;
+    width: 500px;
     height: 100vh;
     display: inline-block;
     float: left;
@@ -19,7 +19,7 @@
 
 
 .right-pane {
-    width: calc(100% - 251px);
+    width: calc(100% - 501px);
     height: 100%;
     display: inline-block;
     float: right;
@@ -39,4 +39,57 @@
     font-weight: 800px;
     color: #FFFFFF;
     left: 20px;
+}
+
+
+
+
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.hero {
+  background-image: url('https://images.unsplash.com/photo-1505330625521-f0f45bcc8b4d');
+  background-size: cover;
+  height: 400px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.hero h1 {
+  font-size: 4rem;
+  margin: 0;
+  padding: 0;
+}
+
+.movies {
+  padding: 50px;
+}
+
+.movie {
+  display: flex;
+  margin-bottom: 50px;
+}
+
+.movie img {
+  width: 300px;
+  margin-right: 30px;
+}
+
+.movie h2 {
+  margin: 0;
+  padding: 0;
+}
+
+.movie p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
 }

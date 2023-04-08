@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import './Lists.css';
 import { HomeOutlined, UnorderedListOutlined, PlusOutlined, AntDesignOutlined, EditOutlined } from "@ant-design/icons";
 import listStore from "../../stores/ListStore";
@@ -14,13 +14,15 @@ interface ListsProps {}
 
 const Lists: FC<ListsProps> = observer(() => {
 
+  const [searchText, setSearchText] = useState("");
+
   useEffect(() => {
     // fetch the lists
     fetchData();
   }, []);
 
-  const fetchData = async() => {
-    let lists = await getList();
+  const fetchData = async(query?: string) => {
+    let lists = await getList(query);
     
     if(lists) {
       // attach the new lists to list store
@@ -72,7 +74,13 @@ const Lists: FC<ListsProps> = observer(() => {
     <div className='ItemList' data-testid="Lists" >
       <div className='left-pane-item'>
         <HomeOutlined className='left-pane-item-icon' />
-        To-Do 
+         
+        <input type='text' onChange={(e) => {
+          setSearchText(e.target.value)
+        }}></input>
+        <button onClick={() => {
+          fetchData(searchText)
+        }}>Search</button>
       </div>
       {
         listStore.lists.map((listEach) => {
